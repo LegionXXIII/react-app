@@ -1,12 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <NavLink to="" className="navbar-brand">
+      <Link to="/" className="navbar-brand">
         Vidly
-      </NavLink>
+      </Link>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
           <NavLink to="/movies" className="nav-item nav-link">
