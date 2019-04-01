@@ -1,3 +1,10 @@
+#### Project Info
+
+This project was built based on a React course.
+You can find more info regarding the author of the course here: https://codewithmosh.com/
+
+### Additional Info
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
