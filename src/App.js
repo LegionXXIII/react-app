@@ -10,6 +10,7 @@ import NotFound from "./components/notFound";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import Logout from "./components/logout";
+import Profile from "./components/profile";
 import auth from "./services/authService";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -42,6 +43,10 @@ class App extends Component {
             />
             <Route path="/customers" component={Customers} />
             <Route path="/rentals" component={Rentals} />
+            <ProtectedRoute
+              path="/profile"
+              render={props => <Profile {...props} user={this.state.user} />}
+            />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/movies" />
             <Redirect to="/not-found" />
