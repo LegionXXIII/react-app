@@ -13,7 +13,8 @@ class RentalsTable extends Component {
     { path: "customer.phone", label: "Phone" },
     { path: "movie.title", label: "Title" },
     { path: "dateOut", label: "Date Out" },
-    { path: "dateReturned", label: "Date Returned" }
+    { path: "dateReturned", label: "Date Returned" },
+    { path: "rentalFee", label: "Rental Fee" }
   ];
 
   render() {

@@ -23,11 +23,14 @@ class Rentals extends Component {
     });
 
     rentals.map(rental => {
-      if (rental.dateReturned)
-        return (rental.dateReturned = new Date(
-          rental.dateReturned
-        ).toDateString());
-      return (rental.dateReturned = "-");
+      if (!rental.dateReturned) {
+        rental.dateReturned = "-";
+        rental.rentalFee = "-";
+        return;
+      }
+      return (rental.dateReturned = new Date(
+        rental.dateReturned
+      ).toDateString());
     });
 
     this.setState({ rentals });
