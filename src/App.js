@@ -10,12 +10,14 @@ import NotFound from "./components/notFound";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import CustomerForm from "./components/customerForm";
+import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import Profile from "./components/profile";
+import RentalForm from "./components/rentalForm";
+import ReturnForm from "./components/returnForm";
 import auth from "./services/authService";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
   state = {};
@@ -47,7 +49,13 @@ class App extends Component {
               path="/customers"
               render={props => <Customers {...props} user={user} />}
             />
-            <Route path="/rentals" component={Rentals} />
+            <ProtectedRoute path="/returns/:id" component={ReturnForm} />
+            <ProtectedRoute path="/returns" component={ReturnForm} />
+            <ProtectedRoute path="/rentals/:id" component={RentalForm} />
+            <Route
+              path="/rentals"
+              render={props => <Rentals {...props} user={user} />}
+            />
             <ProtectedRoute
               path="/profile"
               render={props => <Profile {...props} user={user} />}
