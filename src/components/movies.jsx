@@ -15,7 +15,7 @@ class Movies extends Component {
     movies: [],
     genres: [],
     currentPage: 1,
-    pageSize: 4,
+    pageSize: 5,
     searchQuery: "",
     selectedGenre: null,
     sortColumn: { path: "title", order: "asc" }

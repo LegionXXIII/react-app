@@ -9,6 +9,7 @@ import NavBar from "./components/navbar";
 import NotFound from "./components/notFound";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import CustomerForm from "./components/customerForm";
 import Logout from "./components/logout";
 import Profile from "./components/profile";
 import auth from "./services/authService";
@@ -39,13 +40,17 @@ class App extends Component {
             <ProtectedRoute path="/movies/:id" component={MovieForm} />
             <Route
               path="/movies"
-              render={props => <Movies {...props} user={this.state.user} />}
+              render={props => <Movies {...props} user={user} />}
             />
-            <Route path="/customers" component={Customers} />
+            <ProtectedRoute path="/customers/:id" component={CustomerForm} />
+            <Route
+              path="/customers"
+              render={props => <Customers {...props} user={user} />}
+            />
             <Route path="/rentals" component={Rentals} />
             <ProtectedRoute
               path="/profile"
-              render={props => <Profile {...props} user={this.state.user} />}
+              render={props => <Profile {...props} user={user} />}
             />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/movies" />
