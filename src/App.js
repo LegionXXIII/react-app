@@ -51,7 +51,7 @@ class App extends Component {
             />
             <ProtectedRoute path="/returns/:id" component={ReturnForm} />
             <ProtectedRoute path="/returns" component={ReturnForm} />
-            <ProtectedRoute path="/rentals/:id" component={RentalForm} />
+            <ProtectedRoute path="/rentals/new" component={RentalForm} />
             <Route
               path="/rentals"
               render={props => <Rentals {...props} user={user} />}

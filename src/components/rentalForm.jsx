@@ -1,9 +1,11 @@
 import React from "react";
 import Form from "./common/form";
-import { saveRental, getRental } from "../services/rentalService";
+import { saveRental } from "../services/rentalService";
 import { toast } from "react-toastify";
 import Joi from "joi-browser";
 import objectId from "joi-objectid";
+import { getCustomers } from "../services/customerService";
+import { getMovies } from "../services/movieService";
 
 Joi.objectId = objectId(Joi);
 
@@ -13,6 +15,8 @@ class RentalForm extends Form {
       customerId: "",
       movieId: ""
     },
+    customers: [],
+    movies: [],
     errors: {}
   };
 
@@ -21,29 +25,25 @@ class RentalForm extends Form {
     movieId: Joi.objectId().required()
   };
 
-  // async populateRental() {
-  //   try {
-  //     const rentalId = this.props.match.params.id;
-  //     if (rentalId === "new") return;
-
-  //     const { data: rental } = await getRental(rentalId);
-  //     this.setState({ data: this.mapToViewModel(rental) });
-  //   } catch (ex) {
-  //     if (ex.response && ex.response.status === 404)
-  //       this.props.history.replace("/not-found");
-  //   }
-  // }
-
-  async componentDidMount() {
-    // await this.populateRental();
+  async populateCustomers() {
+    const { data: customers } = await getCustomers();
+    this.setState({ customers });
   }
 
-  //   mapToViewModel(rental) {
-  //     return {
-  //       customerId: rental.customer._id,
-  //       movieId: rental.movie._id
-  //     };
-  //   }
+  async populateMovies() {
+    const { data: allMovies } = await getMovies();
+    const movies = allMovies.map(movie => ({
+      name: movie.title,
+      _id: movie._id
+    }));
+
+    this.setState({ movies });
+  }
+
+  async componentDidMount() {
+    await this.populateCustomers();
+    await this.populateMovies();
+  }
 
   doSubmit = async () => {
     try {
@@ -61,8 +61,8 @@ class RentalForm extends Form {
       <React.Fragment>
         <h1>Rental Form</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("customerId", "Customer Id")}
-          {this.renderInput("movieId", "Movie Id")}
+          {this.renderSelect("customerId", "Customer", this.state.customers)}
+          {this.renderSelect("movieId", "Movie", this.state.movies)}
           {this.renderButton("Submit")}
         </form>
       </React.Fragment>
