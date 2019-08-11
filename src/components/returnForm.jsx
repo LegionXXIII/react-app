@@ -5,6 +5,8 @@ import Joi from "joi-browser";
 import objectId from "joi-objectid";
 import { saveReturn } from "../services/returnService";
 import { getRental } from "../services/rentalService";
+import { getCustomers } from "../services/customerService";
+import { getMovies } from "../services/movieService";
 
 Joi.objectId = objectId(Joi);
 
@@ -14,6 +16,8 @@ class ReturnForm extends Form {
       customerId: "",
       movieId: ""
     },
+    customers: [],
+    movies: [],
     errors: {}
   };
 
@@ -35,8 +39,25 @@ class ReturnForm extends Form {
     }
   }
 
+  async populateCustomers() {
+    const { data: customers } = await getCustomers();
+    this.setState({ customers });
+  }
+
+  async populateMovies() {
+    const { data: allMovies } = await getMovies();
+    const movies = allMovies.map(movie => ({
+      name: movie.title,
+      _id: movie._id
+    }));
+
+    this.setState({ movies });
+  }
+
   async componentDidMount() {
     await this.populateRental();
+    await this.populateCustomers();
+    await this.populateMovies();
   }
 
   mapToViewModel(rental) {
@@ -66,8 +87,8 @@ class ReturnForm extends Form {
       <React.Fragment>
         <h1>Return Form</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("customerId", "Customer Id")}
-          {this.renderInput("movieId", "Movie Id")}
+          {this.renderSelect("customerId", "Customer", this.state.customers)}
+          {this.renderSelect("movieId", "Movie", this.state.movies)}
           {this.renderButton("Submit")}
         </form>
       </React.Fragment>
