@@ -21,3 +21,7 @@ export function saveRental(rental) {
   }
   return http.post(apiEndpoint, rental);
 }
+
+export function deleteRental(rentalId) {
+  return http.delete(rentalUrl(rentalId));
+}

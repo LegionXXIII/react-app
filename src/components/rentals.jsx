@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import RentalsTable from "./rentalsTable";
 import SearchBox from "./searchBox";
 import Pagination from "./common/pagination";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { getRentals } from "../services/rentalService";
+import { getRentals, deleteRental } from "../services/rentalService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
@@ -46,6 +47,21 @@ class Rentals extends Component {
 
   handlePageChange = page => {
     this.setState({ currentPage: page });
+  };
+
+  handleDelete = async rental => {
+    const originalRentals = this.state.rentals;
+    const rentals = this.state.rentals.filter(r => r._id !== rental._id);
+    this.setState({ rentals });
+
+    try {
+      await deleteRental(rental._id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("This rental has already been deleted.");
+
+      this.setState({ rentals: originalRentals });
+    }
   };
 
   getPagedData = () => {
@@ -101,6 +117,7 @@ class Rentals extends Component {
           sortColumn={sortColumn}
           onSort={this.handleSort}
           rentals={rentals}
+          onDelete={this.handleDelete}
         />
         <Pagination
           itemsCount={totalCount}

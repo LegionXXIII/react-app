@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 import { Link } from "react-router-dom";
+import auth from "../services/authService";
 
 class RentalsTable extends Component {
   columns = [
@@ -15,6 +16,25 @@ class RentalsTable extends Component {
     { path: "dateReturned", label: "Date Returned" },
     { path: "rentalFee", label: "Rental Fee" }
   ];
+
+  deleteColumn = {
+    key: "delete",
+    content: rental => (
+      <button
+        onClick={() => this.props.onDelete(rental)}
+        className="btn btn-danger btn-sm"
+      >
+        Delete
+      </button>
+    )
+  };
+
+  constructor() {
+    super();
+    const user = auth.getCurrentUser();
+
+    if (user && user.isAdmin) this.columns.push(this.deleteColumn);
+  }
 
   render() {
     const { sortColumn, onSort, rentals } = this.props;
