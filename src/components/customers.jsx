@@ -61,8 +61,10 @@ class Customers extends Component {
 
     let filtered = allCustomers;
     if (searchQuery)
-      filtered = allCustomers.filter(c =>
-        c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allCustomers.filter(
+        c =>
+          c.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+          c.phone.startsWith(searchQuery)
       );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);

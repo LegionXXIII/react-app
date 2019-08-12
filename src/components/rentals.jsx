@@ -75,8 +75,10 @@ class Rentals extends Component {
 
     let filtered = allRentals;
     if (searchQuery)
-      filtered = allRentals.filter(r =>
-        r.customer.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allRentals.filter(
+        r =>
+          r.customer.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+          r.customer.phone.startsWith(searchQuery)
       );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
