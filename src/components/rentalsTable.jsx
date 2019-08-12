@@ -11,6 +11,7 @@ class RentalsTable extends Component {
       content: rental => <Link to={`/returns/${rental._id}`}>{rental._id}</Link>
     },
     { path: "customer.name", label: "Name" },
+    { path: "customer.phone", label: "Phone" },
     { path: "movie.title", label: "Movie Title" },
     { path: "dateOut", label: "Date Out" },
     { path: "dateReturned", label: "Date Returned" },

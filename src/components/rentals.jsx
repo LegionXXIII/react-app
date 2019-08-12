@@ -20,7 +20,7 @@ class Rentals extends Component {
   async componentDidMount() {
     const { data: rentals } = await getRentals();
     rentals.map(rental => {
-      return (rental.dateOut = new Date(rental.dateOut).toDateString());
+      return (rental.dateOut = new Date(rental.dateOut).toLocaleDateString());
     });
 
     rentals.map(rental => {
@@ -31,7 +31,7 @@ class Rentals extends Component {
       }
       return (rental.dateReturned = new Date(
         rental.dateReturned
-      ).toDateString());
+      ).toLocaleDateString());
     });
 
     this.setState({ rentals });
